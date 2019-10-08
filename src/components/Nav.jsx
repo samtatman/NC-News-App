@@ -1,9 +1,33 @@
-import React from 'react'
+import React from "react";
+import { Link } from "@reach/router";
+import { getTopics } from "../utils/api";
 
-const Nav = () => {
+class Nav extends React.Component {
+  state = { topics: [], username: null };
+
+  componentDidMount() {
+    return getTopics().then(topics => {
+      console.log(topics);
+      this.setState({ topics });
+    });
+  }
+
+  render() {
+    const { topics } = this.state;
+    const signIn = this.state.username || "Sign In";
+    console.log(topics, "topics");
     return (
-        <nav><button>Home</button>&nbsp;<button>Topic 1</button>&nbsp;<button>Topic 2</button>&nbsp;<button>Topic 3</button>&nbsp;</nav>
-    )
+      <nav>
+        <Link to="/">Home</Link>{" "}
+        {topics.map(topic => {
+          return (
+            <Link to={`/articles/topics/${topic.slug}`}>{topic.slug} </Link>
+          );
+        })}
+        <Link to="/user/jessjelly">Sign In</Link>
+      </nav>
+    );
+  }
 }
 
-export default Nav
+export default Nav;

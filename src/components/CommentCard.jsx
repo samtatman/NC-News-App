@@ -5,8 +5,11 @@ class CommentCard extends React.Component {
 
     render () {
         const {comment} = this.props
+        const {created_at, body, author} = comment
         return (
-            <li key={comment.created_at}>{comment.body}</li>
+            <li key={created_at}>{body} <br/>
+            <p>{author}</p>
+            </li>
         )
     }
 }

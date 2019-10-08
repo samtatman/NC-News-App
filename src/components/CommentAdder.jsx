@@ -6,7 +6,7 @@ class CommentAdder extends React.Component {
     render () {
         return (
             <form>
-                <label > Tell us how we're wrong!!
+                <label>Tell us how we're wrong!!
                 <input type='text'/>
                 </label>
                 <button>Submit</button>

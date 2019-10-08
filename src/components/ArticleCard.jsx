@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from '@reach/router'
 
 class ArticleCard extends React.Component {
 
@@ -6,10 +7,12 @@ class ArticleCard extends React.Component {
 
     render() {
 const {article, changeVotes} = this.props
+const {article_id, comment_count, title, votes, author} = article
     return (
-        <li key = {article.title}> <h3>{article.title}</h3><br/>
-        <p>votes: {article.votes}, author: {article.author}</p>
-        <button onClick={()=>changeVotes(1, article.article_id)} >upvote</button><button>downvote</button>
+        <li key = {title}> <Link to ={`/articles/${article_id}`}><h3>{title}</h3> </Link>
+        <p>votes: {votes}, by: {author}</p>
+        <p>comments: {comment_count}</p>
+        <button onClick={()=>changeVotes(1, article_id)} >upvote</button><button onClick={()=>changeVotes(-1, article_id)}>downvote</button>
          </li>
     )
 }

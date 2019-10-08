@@ -33,7 +33,7 @@ render () {
         <ul>
         {comments.map(comment => {
         return < CommentCard key={comment.comment_id} comment={comment}/>
-        })}}
+        })}
         </ul>
         <CommentAdder/>
         </main>

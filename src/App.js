@@ -1,23 +1,31 @@
-import React from 'react';
-import './App.css';
-import Header from './components/Header'
-import Nav from './components/Nav'
-import ArticleList from './components/ArticleList'
-import SingleArticle from './components/SingleArticle'
-import {Router} from '@reach/router'
+import React from "react";
+import "./App.css";
+import Header from "./components/Header";
+import Nav from "./components/Nav";
+import ArticleList from "./components/ArticleList";
+import SingleArticle from "./components/SingleArticle";
+import { Router } from "@reach/router";
+import SingleUser from "./components/SingleUser";
 
-function App() {
-  return (
-    <div>
-     <Header />
-     <Nav />
-     <Router >
-     <ArticleList path="/" />
-     <ArticleList path="/articles" />
-     <SingleArticle path='/articles/:article_id' />
-     </Router>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    username: "jessjelly"
+  };
+  render() {
+    return (
+      <div>
+        <Header />
+        <Nav />
+        <Router>
+          <ArticleList path="/" />
+          <ArticleList path="/articles" />
+          <ArticleList path="/articles/topics/:topic" />
+          <SingleArticle path="/articles/:article_id" />
+          <SingleUser path="/user/:username" />
+        </Router>
+      </div>
+    );
+  }
 }
 
 export default App;
