@@ -2,6 +2,7 @@ import React from "react";
 import { getArticleById, getCommentsByArticleId } from "../utils/api";
 import CommentCard from "./CommentCard";
 import CommentAdder from "./CommentAdder";
+import Sorter from "./Sorter";
 import Voter from "./Voter";
 
 class SingleArticle extends React.Component {
@@ -52,6 +53,7 @@ class SingleArticle extends React.Component {
         <h2>{title}</h2>
         <p>{body}</p>
         <Voter votes={votes} id={article_id} content="article" />
+        <Sorter changeSortandOrder={this.changeSortandOrder} />
         <ul>
           {comments.map(comment => {
             return (
