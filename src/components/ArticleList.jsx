@@ -1,6 +1,7 @@
 import React from "react";
 import { getArticles } from "../utils/api";
 import ArticleCard from "./ArticleCard";
+import Sorter from "./Sorter";
 
 class ArticleList extends React.Component {
   state = {
@@ -14,27 +15,39 @@ class ArticleList extends React.Component {
     this.fetchArticles();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
+  componentDidUpdate(prevProps, prevState) {
+    const { sort_by, order_by } = this.state;
+    if (
+      prevProps !== this.props ||
+      prevState.sort_by !== sort_by ||
+      prevState.order_by !== order_by
+    ) {
       this.fetchArticles();
     }
   }
 
   fetchArticles = () => {
     const { topic, author } = this.props;
-    getArticles(topic, author).then(articles => {
+    const { sort_by, order_by } = this.state;
+    getArticles(topic, author, sort_by, order_by).then(articles => {
       this.setState({ articles });
     });
   };
 
+  changeSortandOrder = (keyToChange, value) => {
+    this.setState({ [keyToChange]: value });
+  };
   render() {
     const { articles } = this.state;
     return (
-      <ul>
-        {articles.map(article => {
-          return <ArticleCard article={article} key={`${article.title}`} />;
-        })}
-      </ul>
+      <main>
+        <Sorter changeSortandOrder={this.changeSortandOrder} />
+        <ul>
+          {articles.map(article => {
+            return <ArticleCard article={article} key={`${article.title}`} />;
+          })}
+        </ul>
+      </main>
     );
   }
 }
