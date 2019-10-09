@@ -4,11 +4,13 @@ const request = axios.create({
   baseURL: "https://agent-news.herokuapp.com/api"
 });
 
-export const getArticles = topic => {
+export const getArticles = (topic, author) => {
   console.log(topic, "topic");
-  return request.get("/articles", { params: { topic } }).then(({ data }) => {
-    return data.articles;
-  });
+  return request
+    .get("/articles", { params: { topic, author } })
+    .then(({ data }) => {
+      return data.articles;
+    });
 };
 
 export const getArticleById = id => {
@@ -24,13 +26,20 @@ export const getCommentsByArticleId = id => {
   });
 };
 
-export const changeArticleVotes = (num, id) => {
+export const changeVotes = (num, id, content) => {
   return request
-    .patch(`/articles/${id}`, { inc_votes: num })
+    .patch(`/${content}s/${id}`, { inc_votes: num })
     .then(({ data }) => {
-      return data.article;
+      return data[content];
     });
 };
+// export const changeCommentVotes = (num, id) => {
+//   return request
+//     .patch(`/comments/${id}`, { inc_votes: num })
+//     .then(({ data }) => {
+//       return data.comment;
+//     });
+// };
 
 export const getTopics = () => {
   return request.get("/topics").then(({ data }) => {
@@ -43,4 +52,12 @@ export const getUserByUsername = username => {
     console.log(data, "data");
     return data.user[0];
   });
+};
+
+export const postCommentByArticleId = (article_id, comment) => {
+  return request
+    .post(`articles/${article_id}/comments`, comment)
+    .then(({ data }) => {
+      return data.comment;
+    });
 };

@@ -1,17 +1,13 @@
 import React from "react";
-import { getArticles, changeArticleVotes } from "../utils/api";
+import { getArticles } from "../utils/api";
 import ArticleCard from "./ArticleCard";
 
 class ArticleList extends React.Component {
   state = {
     articles: [],
-    total_count: 0
-  };
-
-  changeVotes = (num, article_id) => {
-    changeArticleVotes(num, article_id).then(() => {
-      return this.fetchArticles();
-    });
+    total_count: 0,
+    sort_by: null,
+    order_by: null
   };
 
   componentDidMount() {
@@ -25,9 +21,8 @@ class ArticleList extends React.Component {
   }
 
   fetchArticles = () => {
-    const { topic } = this.props;
-    console.log(topic, "props topic");
-    getArticles(topic).then(articles => {
+    const { topic, author } = this.props;
+    getArticles(topic, author).then(articles => {
       this.setState({ articles });
     });
   };
@@ -37,9 +32,7 @@ class ArticleList extends React.Component {
     return (
       <ul>
         {articles.map(article => {
-          return (
-            <ArticleCard article={article} changeVotes={this.changeVotes} />
-          );
+          return <ArticleCard article={article} key={`${article.title}`} />;
         })}
       </ul>
     );

@@ -14,17 +14,20 @@ class Nav extends React.Component {
 
   render() {
     const { topics } = this.state;
-    const signIn = this.state.username || "Sign In";
+    const { username } = this.props;
+    const signIn = username || "Sign In";
     console.log(topics, "topics");
     return (
       <nav>
         <Link to="/">Home</Link>{" "}
         {topics.map(topic => {
           return (
-            <Link to={`/articles/topics/${topic.slug}`}>{topic.slug} </Link>
+            <Link to={`/articles/topics/${topic.slug}`} key={`${topic.slug}`}>
+              {topic.slug}{" "}
+            </Link>
           );
         })}
-        <Link to="/user/jessjelly">Sign In</Link>
+        {username && <Link to="/user/jessjelly">{signIn}</Link>}
       </nav>
     );
   }

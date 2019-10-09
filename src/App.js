@@ -12,10 +12,11 @@ class App extends React.Component {
     username: "jessjelly"
   };
   render() {
+    const { username } = this.state;
     return (
       <div>
         <Header />
-        <Nav />
+        <Nav username={username} />
         <Router>
           <ArticleList path="/" />
           <ArticleList path="/articles" />

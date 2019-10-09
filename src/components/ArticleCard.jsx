@@ -1,22 +1,27 @@
-import React from 'react'
-import {Link} from '@reach/router'
+import React from "react";
+import { Link } from "@reach/router";
+import Voter from "./Voter";
 
 class ArticleCard extends React.Component {
+  state = {};
 
-    state = {}
-
-    render() {
-const {article, changeVotes} = this.props
-const {article_id, comment_count, title, votes, author} = article
+  render() {
+    const { article } = this.props;
+    const { article_id, comment_count, title, votes, author } = article;
     return (
-        <li key = {title}> <Link to ={`/articles/${article_id}`}><h3>{title}</h3> </Link>
-        <p>votes: {votes}, by: {author}</p>
+      <li key={title}>
+        {" "}
+        <Link to={`/articles/${article_id}`}>
+          <h3>{title}</h3>{" "}
+        </Link>
+        <p>
+          by: <Link to={`/user/${author}`}> {author} </Link>
+        </p>
         <p>comments: {comment_count}</p>
-        <button onClick={()=>changeVotes(1, article_id)} >upvote</button><button onClick={()=>changeVotes(-1, article_id)}>downvote</button>
-         </li>
-    )
+        <Voter votes={votes} id={article_id} content="article" />
+      </li>
+    );
+  }
 }
 
-}
-
-export default ArticleCard
+export default ArticleCard;
