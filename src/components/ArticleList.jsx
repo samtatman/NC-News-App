@@ -43,8 +43,14 @@ class ArticleList extends React.Component {
       <main>
         <Sorter changeSortandOrder={this.changeSortandOrder} />
         <ul>
-          {articles.map(article => {
-            return <ArticleCard article={article} key={`${article.title}`} />;
+          {articles.map((article, i) => {
+            return (
+              <ArticleCard
+                article={article}
+                key={`${article.title}`}
+                index={i}
+              />
+            );
           })}
         </ul>
       </main>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "@reach/router";
 import Voter from "./Voter";
+import style from "./ArticleCard.module.css";
 
 class ArticleCard extends React.Component {
   state = {};
@@ -8,9 +9,9 @@ class ArticleCard extends React.Component {
   render() {
     const { article } = this.props;
     const { article_id, comment_count, title, votes, author } = article;
+
     return (
-      <li key={title}>
-        {" "}
+      <li key={title} className={style.card}>
         <Link to={`/articles/${article_id}`}>
           <h3>{title}</h3>{" "}
         </Link>

@@ -14,7 +14,7 @@ class App extends React.Component {
   render() {
     const { username } = this.state;
     return (
-      <div>
+      <main>
         <Header />
         <Nav username={username} />
         <Router>
@@ -24,7 +24,7 @@ class App extends React.Component {
           <SingleArticle path="/articles/:article_id" />
           <SingleUser path="/user/:username" />
         </Router>
-      </div>
+      </main>
     );
   }
 }

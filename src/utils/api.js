@@ -19,11 +19,13 @@ export const getArticleById = id => {
   });
 };
 
-export const getCommentsByArticleId = id => {
-  return request.get(`/articles/${id}/comments`).then(({ data }) => {
-    const { comments, total_count } = data;
-    return [comments, total_count];
-  });
+export const getCommentsByArticleId = (id, sort_by, order_by) => {
+  return request
+    .get(`/articles/${id}/comments`, { params: { sort_by, order_by } })
+    .then(({ data }) => {
+      const { comments, total_count } = data;
+      return [comments, total_count];
+    });
 };
 
 export const changeVotes = (num, id, content) => {
