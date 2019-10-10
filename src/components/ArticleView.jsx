@@ -1,6 +1,7 @@
 import React from "react";
 import { getArticleById } from "../utils/api";
 import Voter from "./Voter";
+import style from "./ArticleView.module.css";
 
 class ArticleView extends React.Component {
   state = { article: {} };
@@ -20,9 +21,11 @@ class ArticleView extends React.Component {
     const { title, body, votes, article_id } = article;
     return (
       <main>
-        <h2>{title}</h2>
+        <div className={style.main}>
+          <Voter votes={votes} id={article_id} content="article" />
+          <h2>{title}</h2>
+        </div>
         <p>{body}</p>
-        <Voter votes={votes} id={article_id} content="article" />
       </main>
     );
   }

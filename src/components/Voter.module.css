@@ -1,0 +1,26 @@
+button {
+  box-shadow: none;
+}
+
+.votes {
+  font-family: "Courier New", Courier, monospace;
+}
+
+.voteButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.voteButtons button {
+  box-shadow: none;
+  border-radius: unset;
+  border: none;
+  font-size: 10px;
+}
+.upVoted {
+  color: #ec7802;
+}
+
+.downVoted {
+  color: #6284f7;
+}

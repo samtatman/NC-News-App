@@ -3,7 +3,7 @@ import { getUserByUsername } from "../utils/api";
 import ArticleList from "./ArticleList";
 
 class SingleUser extends React.Component {
-  state = { user: {} };
+  state = { user: {}, error: null };
   componentDidMount() {
     this.fetchUserByUsername();
   }
@@ -16,9 +16,11 @@ class SingleUser extends React.Component {
 
   fetchUserByUsername = () => {
     const { username } = this.props;
-    getUserByUsername(username).then(user => {
-      this.setState({ user });
-    });
+    getUserByUsername(username)
+      .then(user => {
+        this.setState({ user });
+      })
+      .catch(err => err);
   };
 
   render() {

@@ -12,14 +12,14 @@ class ArticleCard extends React.Component {
 
     return (
       <li key={title} className={style.card}>
-        <Link to={`/articles/${article_id}`}>
-          <h3>{title}</h3>{" "}
-        </Link>
-        <p>
-          by: <Link to={`/user/${author}`}> {author} </Link>
-        </p>
-        <p>comments: {comment_count}</p>
-        <Voter votes={votes} id={article_id} content="article" />
+        <Link to={`/user/${author}`}> {author} </Link>
+        <div className={style.main}>
+          <Voter votes={votes} id={article_id} content="article" />
+          <Link to={`/articles/${article_id}`} className={style.title}>
+            <h3 className={style.title}>{title}</h3>{" "}
+          </Link>
+        </div>
+        <button className="fas fa-comment"> {comment_count}</button>
       </li>
     );
   }
