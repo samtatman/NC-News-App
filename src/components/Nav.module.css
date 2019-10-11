@@ -1,5 +1,13 @@
 .navBar {
-  background-color: orange;
   display: flex;
   justify-content: space-evenly;
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.orange {
+  color: #ffbf00;
 }

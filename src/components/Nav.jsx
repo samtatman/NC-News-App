@@ -21,13 +21,13 @@ class Nav extends React.Component {
       <nav className={style.navBar}>
         <Link to="/">
           <span>
-            <i className="fas fa-home" />{" "}
+            <i className="fas fa-home" />
           </span>
         </Link>
         {topics.map(topic => {
           return (
             <Link to={`/articles/topics/${topic.slug}`} key={`${topic.slug}`}>
-              {topic.slug}{" "}
+              {topic.slug}
             </Link>
           );
         })}
