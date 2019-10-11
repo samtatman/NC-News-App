@@ -22,7 +22,7 @@ class App extends React.Component {
           <ArticleList path="/" />
           <ArticleList path="/articles" />
           <ArticleList path="/articles/topics/:topic" />
-          <SingleArticle path="/articles/:article_id" />
+          <SingleArticle path="/articles/:article_id" username={username} />
           <SingleUser path="/user/:username" />
           <PageNotFound path="/*" />
         </Router>

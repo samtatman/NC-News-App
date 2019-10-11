@@ -33,15 +33,15 @@ class CommentList extends React.Component {
   fetchComments = () => {
     const { article_id } = this.props;
     const { sort_by, order_by, p } = this.state;
-    getCommentsByArticleId(article_id, sort_by, order_by, p).then(
-      commentsAndCount => {
+    getCommentsByArticleId(article_id, sort_by, order_by, p)
+      .then(commentsAndCount => {
         this.setState({
           comments: commentsAndCount[0],
           comment_count: commentsAndCount[1],
           isLoading: false
         });
-      }
-    );
+      })
+      .catch(err => console.log(err));
   };
   changeSortandOrder = (keyToChange, value) => {
     this.setState({ [keyToChange]: value });
@@ -68,7 +68,7 @@ class CommentList extends React.Component {
 
   render() {
     const { comments, isLoading, order_by, sort_by } = this.state;
-    const { article_id } = this.props;
+    const { article_id, username } = this.props;
     return (
       <main className="commentList">
         {isLoading ? (
@@ -79,11 +79,16 @@ class CommentList extends React.Component {
               changeSortandOrder={this.changeSortandOrder}
               order_by={order_by}
               sort_by={sort_by}
+              content="comments"
             />
             <ul>
               {comments.map(comment => {
                 return (
-                  <CommentCard key={comment.comment_id} comment={comment} />
+                  <CommentCard
+                    key={comment.comment_id}
+                    comment={comment}
+                    username={username}
+                  />
                 );
               })}
             </ul>

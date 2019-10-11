@@ -60,3 +60,7 @@ export const postCommentByArticleId = (article_id, comment) => {
       return data.comment;
     });
 };
+
+export const deleteCommentById = id => {
+  return request.delete(`comments/${id}`);
+};

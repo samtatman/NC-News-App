@@ -1,17 +1,22 @@
 .card {
-    background-color: #26203a;
-    color: white;
-    padding: 5%;
-    margin: 2%;
-  }
-  .main {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .title {
-    color: gold;
-    text-decoration: none;
-    flex-grow: 5;
-  }
-  
+  background-color: #26203a;
+  color: white;
+  padding: 5%;
+  margin: 2%;
+}
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  color: gold;
+  text-decoration: none;
+  flex-grow: 5;
+}
+.deletedCard {
+  background-color: #574986;
+  color: white;
+  padding: 5%;
+  margin: 2%;
+}

@@ -26,15 +26,15 @@ class Voter extends React.Component {
     if (voteChange === -1) downVoteColor = style.downVoted;
     return (
       <div className={style.voteButtons}>
-        <button
+        <i
           onClick={() => this.alterVote(1)}
           className={`fas fa-arrow-alt-circle-up ${upVoteColor}`}
-        ></button>
-        <p className={style.votes}>{votes}</p>
-        <button
+        ></i>
+        <p className={style.votes}>{votes + voteChange}</p>
+        <i
           onClick={() => this.alterVote(-1)}
           className={`fas fa-arrow-alt-circle-down ${downVoteColor}`}
-        ></button>
+        ></i>
       </div>
     );
   }

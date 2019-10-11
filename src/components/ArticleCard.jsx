@@ -19,7 +19,13 @@ class ArticleCard extends React.Component {
             <h3 className={style.title}>{title}</h3>{" "}
           </Link>
         </div>
-        <button className="fas fa-comment"> {comment_count}</button>
+        <p>
+          {" "}
+          <span>
+            <i className="fas fa-comment"> </i>{" "}
+          </span>
+          Comments:{comment_count}
+        </p>
       </li>
     );
   }

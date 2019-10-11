@@ -4,6 +4,7 @@ import ArticleCard from "./ArticleCard";
 import Sorter from "./Sorter";
 import Loader from "./Loader";
 import throttle from "lodash.throttle";
+import ErrorHandler from "./ErrorHandler";
 
 class ArticleList extends React.Component {
   state = {
@@ -38,11 +39,13 @@ class ArticleList extends React.Component {
     const { sort_by, order_by, p } = this.state;
     getArticles(topic, author, sort_by, order_by, p)
       .then(articles => {
-        this.setState({ articles, isLoading: false });
+        this.setState({ articles, isLoading: false, error: null });
       })
       .catch(err => {
         console.log(err.response.data);
-        this.setState({ error: err.response.data.msg });
+        this.setState({
+          error: { msg: err.response.data.msg, status: err.response.status }
+        });
       });
   };
 
@@ -69,17 +72,22 @@ class ArticleList extends React.Component {
   }, 2000);
 
   render() {
-    const { articles, isLoading, sort_by, order_by } = this.state;
+    const { articles, isLoading, sort_by, order_by, error } = this.state;
+    const { topic } = this.props;
     return (
       <main className="articleList">
-        {isLoading ? (
+        {error ? (
+          <ErrorHandler error={error} />
+        ) : isLoading ? (
           <Loader />
         ) : (
           <div>
+            {topic && <p>Articles about {topic}</p>}
             <Sorter
               changeSortandOrder={this.changeSortandOrder}
               sort_by={sort_by}
               order_by={order_by}
+              content="articles"
             />
             <ul>
               {articles.map((article, i) => {

@@ -1,0 +1,10 @@
+.main {
+  background-color: #26203a;
+  display: flex;
+  flex-direction: column;
+}
+.main textarea {
+  background-color: white;
+  border-radius: none;
+  color: black;
+}

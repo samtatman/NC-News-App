@@ -1,4 +1,9 @@
-.main {
+.main div {
   display: flex;
   justify-content: space-between;
+  max-width: 800px;
+}
+
+.main p {
+  max-width: 800 px;
 }

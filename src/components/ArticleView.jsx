@@ -10,19 +10,23 @@ class ArticleView extends React.Component {
     this.fetchArticle();
   }
   fetchArticle = () => {
-    const { article_id } = this.props;
-    getArticleById(article_id).then(article => {
-      this.setState({ article });
-    });
+    const { article_id, handleArticleNotFound } = this.props;
+    getArticleById(article_id)
+      .then(article => {
+        this.setState({ article });
+      })
+      .catch(error => {
+        handleArticleNotFound(error);
+      });
   };
 
   render() {
     const { article } = this.state;
     const { title, body, votes, article_id } = article;
     return (
-      <main>
-        <div className={style.main}>
-          <Voter votes={votes} id={article_id} content="article" />
+      <main className={style.main}>
+        <div>
+          {votes && <Voter votes={votes} id={article_id} content="article" />}
           <h2>{title}</h2>
         </div>
         <p>{body}</p>

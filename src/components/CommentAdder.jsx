@@ -1,5 +1,6 @@
 import React from "react";
 import { postCommentByArticleId } from "../utils/api";
+import style from "./CommentAdder.module.css";
 
 class CommentAdder extends React.Component {
   state = { body: "", username: "jessjelly" };
@@ -11,7 +12,6 @@ class CommentAdder extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.props, "props");
     const { article_id, fetchComments } = this.props;
     postCommentByArticleId(article_id, this.state)
       .then(() => {
@@ -23,16 +23,15 @@ class CommentAdder extends React.Component {
   };
 
   render() {
+    const { username } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Tell us how we're wrong!!
-          <input
-            type="text"
-            onChange={this.handleChange}
-            value={this.state.body}
-          />
-        </label>
+      <form onSubmit={this.handleSubmit} className={style.main}>
+        <label>Add Comment as {username}</label>
+        <textarea
+          onChange={this.handleChange}
+          value={this.state.body}
+          required
+        />
         <button>Submit</button>
       </form>
     );

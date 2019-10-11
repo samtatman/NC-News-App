@@ -15,7 +15,6 @@ button {
   box-shadow: none;
   border-radius: unset;
   border: none;
-  font-size: 10px;
 }
 .upVoted {
   color: #ec7802;

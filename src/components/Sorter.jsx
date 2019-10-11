@@ -1,6 +1,22 @@
 import React from "react";
+import style from "./Sorter.module.css";
 
 class Sorter extends React.Component {
+  state = {
+    sort_byValue: "comment_count"
+  };
+
+  handleChange = ({ target }) => {
+    this.setState({ sort_byValue: target.value });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const { sort_byValue } = this.state;
+    const { changeSortandOrder } = this.props;
+    changeSortandOrder("sort_by", sort_byValue);
+  };
+
   changeOrder = () => {
     const { changeSortandOrder, order_by } = this.props;
     let newOrder;
@@ -8,26 +24,25 @@ class Sorter extends React.Component {
     else if (order_by === "asc") newOrder = "desc";
     changeSortandOrder("order_by", newOrder);
   };
+
   render() {
-    const { changeSortandOrder, order_by } = this.props;
+    const { order_by, content } = this.props;
     let buttonClass;
     if (order_by === "desc") buttonClass = "fas fa-sort-amount-up";
     if (order_by === "asc") buttonClass = "fas fa-sort-amount-down";
     return (
-      <div>
-        <button
-          onClick={this.changeOrder}
-          className={`${buttonClass}`}
-        ></button>
-        <button onClick={() => changeSortandOrder("sort_by", "comment_count")}>
-          comment_count
-        </button>
-        <button onClick={() => changeSortandOrder("sort_by", "created_at")}>
-          date added
-        </button>
-        <button onClick={() => changeSortandOrder("sort_by", "votes")}>
-          votes
-        </button>
+      <div className={style.sortBar}>
+        <i onClick={this.changeOrder} className={buttonClass}></i>
+        <form onSubmit={this.handleSubmit}>
+          <select onChange={this.handleChange}>
+            {content === "articles" && (
+              <option value="comment_count">comment_count</option>
+            )}
+            <option value="created_at">date added</option>
+            <option value="votes">votes</option>
+          </select>
+          <button>Sort</button>
+        </form>
       </div>
     );
   }
