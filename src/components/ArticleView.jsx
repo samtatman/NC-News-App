@@ -27,7 +27,7 @@ class ArticleView extends React.Component {
       <main className={style.main}>
         <div>
           {votes && <Voter votes={votes} id={article_id} content="article" />}
-          <h2>{title}</h2>
+          <h2 className={style.title}> {title}</h2>
         </div>
         <p>{body}</p>
       </main>

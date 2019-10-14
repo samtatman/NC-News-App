@@ -36,10 +36,10 @@ class Sorter extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <select onChange={this.handleChange}>
             {content === "articles" && (
-              <option value="comment_count">comment_count</option>
+              <option value="comment_count">Most Comments</option>
             )}
-            <option value="created_at">date added</option>
-            <option value="votes">votes</option>
+            <option value="created_at">Date Added</option>
+            <option value="votes">Most Votes</option>
           </select>
           <button>Sort</button>
         </form>

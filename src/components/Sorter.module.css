@@ -1,2 +1,7 @@
 .sortBar {
+  background-color: #26203a;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1%;
+  margin: 2%;
 }

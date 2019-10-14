@@ -21,20 +21,24 @@ class Nav extends React.Component {
       <nav className={style.navBar}>
         <Link to="/">
           <span>
-            <i className="fas fa-home" />
+            <i className={`fas fa-home ${style.navElem}`} />
           </span>
         </Link>
         {topics.map(topic => {
           return (
-            <Link to={`/articles/topics/${topic.slug}`} key={`${topic.slug}`}>
-              {topic.slug}
+            <Link
+              to={`/articles/topics/${topic.slug}`}
+              key={`${topic.slug}`}
+              className={style.navElem}
+            >
+              {topic.slug.charAt(0).toUpperCase() + topic.slug.slice(1)}
             </Link>
           );
         })}
         {username && (
-          <Link to="/user/jessjelly">
+          <Link to="/user/jessjelly" className={style.navElem}>
             <span>
-              <i className="fas fa-user"></i>
+              <i className={`fas fa-user ${style.navElem}`}></i>
             </span>
             {` ${signIn}`}
           </Link>
