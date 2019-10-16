@@ -2,7 +2,7 @@ import React from "react";
 import Spinner from "react-spinkit";
 
 const Loader = () => {
-  return <Spinner name="three-bounce" />;
+  return <Spinner name="three-bounce" fadeIn="half" />;
 };
 
 export default Loader;

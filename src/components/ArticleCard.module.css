@@ -13,6 +13,8 @@
   color: gold;
   text-decoration: none;
   flex-grow: 5;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .card button {

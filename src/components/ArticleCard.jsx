@@ -20,7 +20,6 @@ class ArticleCard extends React.Component {
           </Link>
         </div>
         <p>
-          {" "}
           <span>
             <i className="fas fa-comment"> </i>{" "}
           </span>

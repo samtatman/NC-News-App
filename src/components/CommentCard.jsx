@@ -5,31 +5,34 @@ import style from "./CommentCard.module.css";
 import Deleter from "./Deleter";
 
 class CommentCard extends React.Component {
-  state = { deleted: false };
+  state = { isDeleted: false };
 
   deleteCard = () => {
-    this.setState({ deleted: true });
+    this.setState({ isDeleted: true });
   };
 
   render() {
     const { comment, username } = this.props;
     const { created_at, body, author, comment_id, votes } = comment;
-    const { deleted } = this.state;
+    const { isDeleted } = this.state;
     let cardStyle = style.card;
-    if (deleted) cardStyle = style.deletedCard;
+    if (isDeleted) cardStyle = style.deletedCard;
     return (
       <li key={created_at} className={cardStyle}>
-        <Deleter
-          author={author}
-          comment_id={comment_id}
-          username={username}
-          deleteCard={this.deleteCard}
-        />
+        <div>
+          <Deleter
+            author={author}
+            comment_id={comment_id}
+            username={username}
+            deleteCard={this.deleteCard}
+            isDeleted={isDeleted}
+          />
+          {isDeleted && <p>comment deleted</p>}
+        </div>
 
         <div className={style.main}>
-          {deleted && <p>comment deleted</p>}
           <Voter votes={votes} id={comment_id} content="comment" />
-          {body}
+          <p className={style.body}>{body} </p>
         </div>
         <p>
           <Link to={`/user/${author}`}> {author} </Link>

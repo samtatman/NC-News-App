@@ -14,6 +14,7 @@ class ArticleList extends React.Component {
     order_by: "desc",
     p: 1,
     isLoading: true,
+    nextPageLoading: false,
     error: null
   };
 
@@ -39,7 +40,12 @@ class ArticleList extends React.Component {
     const { sort_by, order_by, p } = this.state;
     getArticles(topic, author, sort_by, order_by, p)
       .then(articles => {
-        this.setState({ articles, isLoading: false, error: null });
+        this.setState({
+          articles,
+          isLoading: false,
+          error: null,
+          nextPageLoading: false
+        });
       })
       .catch(err => {
         console.log(err.response.data);
@@ -61,18 +67,29 @@ class ArticleList extends React.Component {
   handleScroll = throttle(event => {
     const distanceFromTop = window.scrollY;
     const documentHeight = document.body.scrollHeight;
-
-    if (distanceFromTop + 1000 > documentHeight) {
+    if (
+      distanceFromTop + 1000 > documentHeight &&
+      !this.state.nextPageLoading &&
+      !this.state.isLoading
+    ) {
       this.setState(currentState => {
         return {
-          p: currentState.p + 1
+          p: currentState.p + 1,
+          nextPageLoading: true
         };
       });
     }
   }, 2000);
 
   render() {
-    const { articles, isLoading, sort_by, order_by, error } = this.state;
+    const {
+      articles,
+      isLoading,
+      nextPageLoading,
+      sort_by,
+      order_by,
+      error
+    } = this.state;
     const { topic } = this.props;
     return (
       <main className="articleList">
@@ -100,6 +117,7 @@ class ArticleList extends React.Component {
                 );
               })}
             </ul>
+            {nextPageLoading && <Loader />}
           </div>
         )}
       </main>

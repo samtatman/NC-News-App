@@ -25,8 +25,10 @@ class ArticleView extends React.Component {
     const { title, body, votes, article_id } = article;
     return (
       <main className={style.main}>
-        <div>
-          {votes && <Voter votes={votes} id={article_id} content="article" />}
+        <div className={style.mainDiv}>
+          {!isNaN(votes) && (
+            <Voter votes={votes} id={article_id} content="article" />
+          )}
           <h2 className={style.title}> {title}</h2>
         </div>
         <p>{body}</p>

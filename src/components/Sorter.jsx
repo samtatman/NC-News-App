@@ -32,8 +32,7 @@ class Sorter extends React.Component {
     if (order_by === "asc") buttonClass = "fas fa-sort-amount-down";
     return (
       <div className={style.sortBar}>
-        <i onClick={this.changeOrder} className={buttonClass}></i>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className={style.form}>
           <select onChange={this.handleChange}>
             {content === "articles" && (
               <option value="comment_count">Most Comments</option>
@@ -41,8 +40,9 @@ class Sorter extends React.Component {
             <option value="created_at">Date Added</option>
             <option value="votes">Most Votes</option>
           </select>
-          <button>Sort</button>
+          <button>{"  Sort"}</button>
         </form>
+        <i onClick={this.changeOrder} className={buttonClass}></i>
       </div>
     );
   }

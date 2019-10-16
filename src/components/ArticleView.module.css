@@ -5,7 +5,7 @@
   margin-right: 5%;
 }
 
-.main div {
+.mainDiv {
   display: flex;
   justify-content: space-between;
   max-width: 800px;
