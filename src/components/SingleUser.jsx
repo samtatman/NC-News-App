@@ -2,6 +2,7 @@ import React from "react";
 import { getUserByUsername } from "../utils/api";
 import ArticleList from "./ArticleList";
 import ErrorHandler from "./ErrorHandler";
+import style from "./SingleUser.module.css";
 
 class SingleUser extends React.Component {
   state = { user: {}, error: null };
@@ -22,7 +23,6 @@ class SingleUser extends React.Component {
         this.setState({ user, error: null });
       })
       .catch(err => {
-        console.log(err.response);
         this.setState({
           error: { msg: err.response.data.msg, status: err.response.status }
         });
@@ -42,7 +42,11 @@ class SingleUser extends React.Component {
         <main>
           <div>
             <p> {user.username} </p>
-            <img src={user.avatar_url} alt="user avatar" />
+            <img
+              src={user.avatar_url}
+              alt="user avatar"
+              className={style.image}
+            />
             <p>Articles by {user.username}</p>
             <ArticleList author={user.username} />
           </div>

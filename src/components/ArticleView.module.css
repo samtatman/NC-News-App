@@ -1,14 +1,17 @@
 .title {
   text-align: center;
-  flex: 3;
   margin-left: 5%;
   margin-right: 5%;
+  flex: 9;
 }
 
 .mainDiv {
   display: flex;
   justify-content: space-between;
-  max-width: 800px;
+}
+
+.voter {
+  flex: 1;
 }
 
 .main p {
