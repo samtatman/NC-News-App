@@ -3,6 +3,7 @@ import { Link } from "@reach/router";
 import Voter from "./Voter";
 import style from "./CommentCard.module.css";
 import Deleter from "./Deleter";
+import moment from "moment";
 
 class CommentCard extends React.Component {
   state = { isDeleted: false };
@@ -34,9 +35,12 @@ class CommentCard extends React.Component {
           <Voter votes={votes} id={comment_id} content="comment" />
           <p className={style.body}>{body} </p>
         </div>
-        <p>
-          <Link to={`/user/${author}`}> {author} </Link>
-        </p>
+        <div className={style.author}>
+          <p>
+            <Link to={`/user/${author}`}> {author} </Link>{" "}
+          </p>
+          <p>{moment(created_at).fromNow()} </p>
+        </div>
       </li>
     );
   }

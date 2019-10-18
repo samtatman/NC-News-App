@@ -35,6 +35,10 @@ class ArticleList extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.removeScrollEventListener();
+  }
+
   fetchArticles = () => {
     const { topic, author } = this.props;
     const { sort_by, order_by, p } = this.state;
@@ -58,12 +62,21 @@ class ArticleList extends React.Component {
   changeSortandOrder = (keyToChange, value) => {
     this.setState({ [keyToChange]: value });
   };
+
   addScrollEventListener = () => {
     document
       .querySelector(".articleList")
       .addEventListener("scroll", this.handleScroll);
     window.addEventListener("scroll", this.handleScroll);
   };
+
+  removeScrollEventListener = () => {
+    document
+      .querySelector(".articleList")
+      .removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
+  };
+
   handleScroll = throttle(event => {
     const distanceFromTop = window.scrollY;
     const documentHeight = document.body.scrollHeight;

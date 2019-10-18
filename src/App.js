@@ -6,7 +6,7 @@ import ArticleList from "./components/ArticleList";
 import SingleArticle from "./components/SingleArticle";
 import { Router } from "@reach/router";
 import SingleUser from "./components/SingleUser";
-import PageNotFound from "./components/PageNotFound";
+import ErrorHandler from "./components/ErrorHandler";
 
 class App extends React.Component {
   state = {
@@ -22,9 +22,9 @@ class App extends React.Component {
           <ArticleList path="/" />
           <ArticleList path="/articles" />
           <ArticleList path="/articles/topics/:topic" />
-          <SingleArticle path="/articles/:article_id" username={username} />
           <SingleUser path="/user/:username" />
-          <PageNotFound path="/*" />
+          <SingleArticle path="/articles/:article_id" username={username} />
+          <ErrorHandler path="/*" error="Page Not Found" />
         </Router>
       </main>
     );

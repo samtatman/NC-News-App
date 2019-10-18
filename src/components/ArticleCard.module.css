@@ -21,3 +21,8 @@
   border: none;
   size: 20%;
 }
+
+.comment {
+  display: flex;
+  justify-content: space-evenly;
+}
