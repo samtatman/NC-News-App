@@ -13,10 +13,13 @@ class ArticleList extends React.Component {
     sort_by: "created_at",
     order_by: "desc",
     p: 1,
+    limit: 10,
     isLoading: true,
     nextPageLoading: false,
     error: null
   };
+
+  controller = new AbortController();
 
   componentDidMount() {
     this.fetchArticles();
@@ -37,22 +40,23 @@ class ArticleList extends React.Component {
 
   componentWillUnmount() {
     this.removeScrollEventListener();
+    this.controller.abort();
   }
 
   fetchArticles = () => {
     const { topic, author } = this.props;
-    const { sort_by, order_by, p } = this.state;
-    getArticles(topic, author, sort_by, order_by, p)
-      .then(articles => {
+    const { sort_by, order_by, p, limit } = this.state;
+    getArticles(topic, author, sort_by, order_by, p, limit)
+      .then(({ articles, total_count }) => {
         this.setState({
           articles,
           isLoading: false,
           error: null,
-          nextPageLoading: false
+          nextPageLoading: false,
+          total_count
         });
       })
       .catch(err => {
-        console.log(err.response.data);
         this.setState({
           error: { msg: err.response.data.msg, status: err.response.status }
         });
@@ -80,11 +84,14 @@ class ArticleList extends React.Component {
   handleScroll = throttle(event => {
     const distanceFromTop = window.scrollY;
     const documentHeight = document.body.scrollHeight;
+    const { p, limit, total_count } = this.state;
     if (
       distanceFromTop + 1000 > documentHeight &&
       !this.state.nextPageLoading &&
-      !this.state.isLoading
+      !this.state.isLoading &&
+      p < Math.ceil(total_count / limit)
     ) {
+      console.log(p);
       this.setState(currentState => {
         return {
           p: currentState.p + 1,

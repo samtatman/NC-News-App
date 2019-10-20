@@ -4,14 +4,13 @@ const request = axios.create({
   baseURL: "https://agent-news.herokuapp.com/api"
 });
 
-export const getArticles = (topic, author, sort_by, order_by, p) => {
-  console.log(order_by, "order_by");
+export const getArticles = (topic, author, sort_by, order_by, p, limit) => {
   return request
     .get("/articles", {
-      params: { topic, author, sort_by, order_by, p }
+      params: { topic, author, sort_by, order_by, p, limit }
     })
     .then(({ data }) => {
-      return data.articles;
+      return data;
     });
 };
 
@@ -21,10 +20,10 @@ export const getArticleById = id => {
   });
 };
 
-export const getCommentsByArticleId = (id, sort_by, order_by, p) => {
+export const getCommentsByArticleId = (id, sort_by, order_by, p, limit) => {
   return request
     .get(`/articles/${id}/comments`, {
-      params: { sort_by, order_by, p }
+      params: { sort_by, order_by, p, limit }
     })
     .then(({ data }) => {
       const { comments, total_count } = data;
@@ -48,7 +47,6 @@ export const getTopics = () => {
 
 export const getUserByUsername = username => {
   return request.get(`users/${username}`).then(({ data }) => {
-    console.log(data, "data");
     return data.user[0];
   });
 };

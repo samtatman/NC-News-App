@@ -14,7 +14,6 @@ class SingleArticle extends React.Component {
   render() {
     const { article_id, username } = this.props;
     const { error } = this.state;
-    console.log(error, "error");
     return (
       <main>
         {error ? (

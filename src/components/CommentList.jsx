@@ -13,11 +13,16 @@ class CommentList extends React.Component {
     sort_by: "created_at",
     order_by: "desc",
     p: 1,
-    isLoading: true
+    limit: 5,
+    isLoading: true,
+    error: null
   };
+
+  controller = new AbortController();
 
   componentDidMount() {
     this.fetchComments();
+    this.addScrollEventListener();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -30,18 +35,29 @@ class CommentList extends React.Component {
       this.fetchComments();
     }
   }
+
+  componentWillUnmount() {
+    this.removeScrollEventListener();
+    this.controller.abort();
+  }
+
   fetchComments = () => {
     const { article_id } = this.props;
-    const { sort_by, order_by, p } = this.state;
-    getCommentsByArticleId(article_id, sort_by, order_by, p)
+    const { sort_by, order_by, p, limit } = this.state;
+    getCommentsByArticleId(article_id, sort_by, order_by, p, limit)
       .then(commentsAndCount => {
+        console.log(commentsAndCount);
         this.setState({
           comments: commentsAndCount[0],
           comment_count: commentsAndCount[1],
           isLoading: false
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({
+          error: { msg: err.response.data.msg, status: err.response.status }
+        });
+      });
   };
   changeSortandOrder = (keyToChange, value) => {
     this.setState({ [keyToChange]: value });
@@ -53,11 +69,27 @@ class CommentList extends React.Component {
       .addEventListener("scroll", this.handleScroll);
     window.addEventListener("scroll", this.handleScroll);
   };
+
+  removeScrollEventListener = () => {
+    document
+      .querySelector(".commentList")
+      .removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
+  };
+
   handleScroll = throttle(event => {
     const distanceFromTop = window.scrollY;
     const documentHeight = document.body.scrollHeight;
+    const { p, limit, comment_count } = this.state;
+    console.log("hello", distanceFromTop, documentHeight);
+    console.log(p);
 
-    if (distanceFromTop + 1000 > documentHeight) {
+    if (
+      distanceFromTop + 1000 > documentHeight &&
+      !this.state.isLoading &&
+      p < Math.ceil(comment_count / limit)
+    ) {
+      console.log("hi");
       this.setState(currentState => {
         return {
           p: currentState.p + 1

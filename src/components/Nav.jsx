@@ -8,7 +8,6 @@ class Nav extends React.Component {
 
   componentDidMount() {
     return getTopics().then(topics => {
-      console.log(topics);
       this.setState({ topics });
     });
   }
