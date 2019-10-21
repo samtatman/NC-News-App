@@ -75,6 +75,16 @@ netlify deploy
 
 specifying './build' as the Publish Directory again.
 
+## Built With
+
+- React JS v16.10.2 - Web Application Framework
+- Netlify v2.17.0 - Application Hosting
+- Reach Router v1.1.0 - Routing Framework
+- Axios v0.19.0 - Promise Based HTTP client
+- Moment JS v2.24.0 - Timestamp parsing
+- React-Spinkit - Loading spinner
+- Lodash Throttle v4.1.1 - Throttling Method
+
 ## Author
 
 Sam Tatman
