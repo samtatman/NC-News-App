@@ -70,7 +70,7 @@ When asked for a Publish Directory, specify
 This will create a draft URL. To create a live URL, input the command:
 
 ```bash
-netlify deploy
+netlify deploy --prod
 ```
 
 specifying './build' as the Publish Directory again.
