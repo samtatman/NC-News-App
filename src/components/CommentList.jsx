@@ -15,22 +15,26 @@ class CommentList extends React.Component {
     p: 1,
     limit: 5,
     isLoading: true,
-    error: null
+    error: null,
+    nextPageLoading: false
   };
 
-  controller = new AbortController();
+  _isMounted = false;
 
   componentDidMount() {
-    this.fetchComments();
+    this._isMounted = true;
     this.addScrollEventListener();
+    this.fetchComments();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { sort_by, order_by } = this.state;
+    const { sort_by, order_by, p } = this.state;
+    const { author } = this.props;
     if (
-      prevProps !== this.props ||
+      prevProps.author !== author ||
       prevState.sort_by !== sort_by ||
-      prevState.order_by !== order_by
+      prevState.order_by !== order_by ||
+      prevState.p !== p
     ) {
       this.fetchComments();
     }
@@ -38,7 +42,7 @@ class CommentList extends React.Component {
 
   componentWillUnmount() {
     this.removeScrollEventListener();
-    this.controller.abort();
+    this._isMounted = false;
   }
 
   fetchComments = () => {
@@ -46,12 +50,14 @@ class CommentList extends React.Component {
     const { sort_by, order_by, p, limit } = this.state;
     getCommentsByArticleId(article_id, sort_by, order_by, p, limit)
       .then(commentsAndCount => {
-        console.log(commentsAndCount);
-        this.setState({
-          comments: commentsAndCount[0],
-          comment_count: commentsAndCount[1],
-          isLoading: false
-        });
+        if (this._isMounted) {
+          this.setState({
+            comments: commentsAndCount[0],
+            comment_count: commentsAndCount[1],
+            isLoading: false,
+            nextPageLoading: false
+          });
+        }
       })
       .catch(err => {
         this.setState({
@@ -81,25 +87,29 @@ class CommentList extends React.Component {
     const distanceFromTop = window.scrollY;
     const documentHeight = document.body.scrollHeight;
     const { p, limit, comment_count } = this.state;
-    console.log("hello", distanceFromTop, documentHeight);
-    console.log(p);
 
     if (
       distanceFromTop + 1000 > documentHeight &&
       !this.state.isLoading &&
       p < Math.ceil(comment_count / limit)
     ) {
-      console.log("hi");
       this.setState(currentState => {
         return {
-          p: currentState.p + 1
+          p: currentState.p + 1,
+          nextPageLoading: true
         };
       });
     }
   }, 2000);
 
   render() {
-    const { comments, isLoading, order_by, sort_by } = this.state;
+    const {
+      comments,
+      isLoading,
+      order_by,
+      sort_by,
+      nextPageLoading
+    } = this.state;
     const { article_id, username } = this.props;
     return (
       <main className="commentList">
@@ -107,12 +117,17 @@ class CommentList extends React.Component {
           <Loader />
         ) : (
           <div>
+            <CommentAdder
+              article_id={article_id}
+              fetchComments={this.fetchComments}
+            />
             <Sorter
               changeSortandOrder={this.changeSortandOrder}
               order_by={order_by}
               sort_by={sort_by}
               content="comments"
             />
+
             <ul>
               {comments.map(comment => {
                 return (
@@ -124,10 +139,7 @@ class CommentList extends React.Component {
                 );
               })}
             </ul>
-            <CommentAdder
-              article_id={article_id}
-              fetchComments={this.fetchComments}
-            />
+            {nextPageLoading && <Loader />}
           </div>
         )}
       </main>

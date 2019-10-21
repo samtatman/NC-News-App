@@ -25,15 +25,17 @@ class CommentAdder extends React.Component {
   render() {
     const { username } = this.state;
     return (
-      <form onSubmit={this.handleSubmit} className={style.main}>
-        <label>Add Comment as {username}</label>
-        <textarea
-          onChange={this.handleChange}
-          value={this.state.body}
-          required
-        />
-        <button>Submit</button>
-      </form>
+      <section className={style.section}>
+        <form onSubmit={this.handleSubmit} className={style.main}>
+          <label>Add Comment as {username} </label>
+          <textarea
+            onChange={this.handleChange}
+            value={this.state.body}
+            required
+          />
+          <button>Submit</button>
+        </form>
+      </section>
     );
   }
 }

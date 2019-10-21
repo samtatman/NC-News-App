@@ -3,7 +3,7 @@ import style from "./Sorter.module.css";
 
 class Sorter extends React.Component {
   state = {
-    sort_byValue: "comment_count"
+    sort_byValue: "created_at"
   };
 
   handleChange = ({ target }) => {
@@ -34,15 +34,18 @@ class Sorter extends React.Component {
       <div className={style.sortBar}>
         <form onSubmit={this.handleSubmit} className={style.form}>
           <select onChange={this.handleChange}>
+            <option value="created_at">Date Added</option>
             {content === "articles" && (
               <option value="comment_count">Most Comments</option>
             )}
-            <option value="created_at">Date Added</option>
+
             <option value="votes">Most Votes</option>
           </select>
           <button>{"  Sort"}</button>
         </form>
-        <i onClick={this.changeOrder} className={buttonClass}></i>
+        <div className={style.icon}>
+          <i onClick={this.changeOrder} className={buttonClass}></i>
+        </div>
       </div>
     );
   }

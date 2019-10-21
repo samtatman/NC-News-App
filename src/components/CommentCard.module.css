@@ -22,9 +22,10 @@
 }
 
 .body {
-  text-align: justify;
+  text-align: center;
   margin-left: 10%;
   margin-right: 10%;
+  flex: 9;
 }
 
 .author {
