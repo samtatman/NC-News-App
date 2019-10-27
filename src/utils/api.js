@@ -10,7 +10,8 @@ export const getArticles = (topic, author, sort_by, order_by, p, limit) => {
       params: { topic, author, sort_by, order_by, p, limit }
     })
     .then(({ data }) => {
-      return data;
+      const { articles } = data;
+      return articles;
     });
 };
 
@@ -26,8 +27,8 @@ export const getCommentsByArticleId = (id, sort_by, order_by, p, limit) => {
       params: { sort_by, order_by, p, limit }
     })
     .then(({ data }) => {
-      const { comments, total_count } = data;
-      return [comments, total_count];
+      const { comments } = data;
+      return comments;
     });
 };
 
@@ -47,7 +48,7 @@ export const getTopics = () => {
 
 export const getUserByUsername = username => {
   return request.get(`users/${username}`).then(({ data }) => {
-    return data.user[0];
+    return data.user;
   });
 };
 

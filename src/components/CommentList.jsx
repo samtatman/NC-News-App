@@ -9,7 +9,6 @@ import throttle from "lodash.throttle";
 class CommentList extends React.Component {
   state = {
     comments: [],
-    comment_count: 0,
     sort_by: "created_at",
     order_by: "desc",
     p: 1,
@@ -49,11 +48,10 @@ class CommentList extends React.Component {
     const { article_id } = this.props;
     const { sort_by, order_by, p, limit } = this.state;
     getCommentsByArticleId(article_id, sort_by, order_by, p, limit)
-      .then(commentsAndCount => {
+      .then(comments => {
         if (this._isMounted) {
           this.setState({
-            comments: commentsAndCount[0],
-            comment_count: commentsAndCount[1],
+            comments,
             isLoading: false,
             nextPageLoading: false
           });
@@ -86,13 +84,8 @@ class CommentList extends React.Component {
   handleScroll = throttle(event => {
     const distanceFromTop = window.scrollY;
     const documentHeight = document.body.scrollHeight;
-    const { p, limit, comment_count } = this.state;
 
-    if (
-      distanceFromTop + 1000 > documentHeight &&
-      !this.state.isLoading &&
-      p < Math.ceil(comment_count / limit)
-    ) {
+    if (distanceFromTop + 1000 > documentHeight && !this.state.isLoading) {
       this.setState(currentState => {
         return {
           p: currentState.p + 1,

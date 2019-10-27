@@ -9,7 +9,6 @@ import ErrorHandler from "./ErrorHandler";
 class ArticleList extends React.Component {
   state = {
     articles: [],
-    total_count: 0,
     sort_by: "created_at",
     order_by: "desc",
     p: 1,
@@ -50,14 +49,13 @@ class ArticleList extends React.Component {
     const { topic, author } = this.props;
     const { sort_by, order_by, p, limit } = this.state;
     getArticles(topic, author, sort_by, order_by, p, limit)
-      .then(({ articles, total_count }) => {
+      .then(articles => {
         if (this._isMounted) {
           this.setState({
             articles,
             isLoading: false,
             error: null,
-            nextPageLoading: false,
-            total_count
+            nextPageLoading: false
           });
         }
       })
@@ -89,12 +87,10 @@ class ArticleList extends React.Component {
   handleScroll = throttle(event => {
     const distanceFromTop = window.scrollY;
     const documentHeight = document.body.scrollHeight;
-    const { p, limit, total_count } = this.state;
     if (
       distanceFromTop + 1000 > documentHeight &&
       !this.state.nextPageLoading &&
-      !this.state.isLoading &&
-      p < Math.ceil(total_count / limit)
+      !this.state.isLoading
     ) {
       this.setState(currentState => {
         return {

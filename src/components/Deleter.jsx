@@ -3,8 +3,6 @@ import { deleteCommentById } from "../utils/api";
 import style from "./Deleter.module.css";
 
 class Deleter extends React.Component {
-  state = {};
-
   removeComment = () => {
     const { comment_id, deleteCard, isDeleted } = this.props;
     if (!isDeleted) {
