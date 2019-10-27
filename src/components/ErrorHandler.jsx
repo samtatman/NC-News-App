@@ -2,7 +2,7 @@ import React from "react";
 import style from "./ErrorHandler.module.css";
 
 const ErrorHandler = props => {
-  const { error } = this.props;
+  const { error } = props;
   if (error === "Page Not Found") {
     return (
       <div className={style.main}>
